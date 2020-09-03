@@ -23,6 +23,16 @@ namespace GameLifeWpf
             chkBx_RandomState.DataContext = lifeCreator.IsRandom;
         }
 
+        private void EmptyCell_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            var cell = (Rectangle)sender;
+            var value = (bool)cell.GetValue();
+            var newValue = !value;
+            cell.SetValue(, newvalue);
+            cell.Fill = newValue? Brushes.Red : Brushes.DarkOrange;
+        }
+
+
         private void btn_Exit_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
@@ -34,36 +44,26 @@ namespace GameLifeWpf
             settings.dispatcherTimer.Stop();
             SetAutoGenerationButtonState();
             var isRandomLife = CheckRandomState();
+            var width = lifeCreator.Fields.GetLength(1);
+            var height = lifeCreator.Fields.GetLength(0);
 
-            for (int i = 0; i < lifeCreator.Fields.GetLength(0); i++)
+            for (int i = 0; i < height; i++)
             {
-                for (int j = 0; j < lifeCreator.Fields.GetLength(1); j++)
+                for (int j = 0; j < width; j++)
                 {
                     Rectangle emptyCell = new Rectangle
                     {
                         // Задаем отступы между клетками 2px
-                        Width = mainLifeGrid.ActualWidth / gameSettings._numberofCellInWidth - 2.0,
-                        Height = mainLifeGrid.ActualWidth / gameSettings._numberofCellInHeight - 2.0
+                        Width = mainLifeGrid.ActualWidth / width - 2.0,
+                        Height = mainLifeGrid.ActualWidth / height - 2.0
                     };
-
-                    // Если выбрана опция "Случайная расстановка"
-                    if (isRandomLife)
-                    {
-                        // Закрашиваем случайную клетку цветом
-                        emptyCell.Fill = (gameSettings.random.Next(0, 2) == 1) ? Brushes.DarkOrange : Brushes.Red;
-                    }
-                    else
-                    {
-                        // Закрашиваем стандартным для пустых ячеек цветом
-                        emptyCell.Fill = Brushes.DarkOrange;
-                    }
+                    emptyCell.DataContext = lifeCreator.Fields[i, j];
                     mainLifeGrid.Children.Add(emptyCell);
-                    Canvas.SetLeft(emptyCell, j * mainLifeGrid.ActualWidth / gameSettings._numberofCellInWidth);
-                    Canvas.SetTop(emptyCell, i * mainLifeGrid.ActualWidth / gameSettings._numberofCellInHeight);
+                    Canvas.SetLeft(emptyCell, j * mainLifeGrid.ActualWidth / width);
+                    Canvas.SetTop(emptyCell, i * mainLifeGrid.ActualWidth / height);
                     // Делаем каждую ячейку кликабельной, подписывая на событие 
                     emptyCell.MouseDown += EmptyCell_MouseDown;
-                    // Заполняем массив для второго поколения клеток
-                    gameSettings.fields[i, j] = emptyCell;
+
                 }
             }
 

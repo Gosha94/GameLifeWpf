@@ -47,11 +47,6 @@ namespace GameLifeWpf.Classes
             }
         }
 
-        private void EmptyCell_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            ((Rectangle)sender).Fill = 
-                (((Rectangle)sender).Fill == Brushes.DarkOrange) ? Brushes.Red : Brushes.DarkOrange;
-        }
 
         public void CreateNextGeneration()
         {
