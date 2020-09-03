@@ -11,19 +11,12 @@ namespace GameLifeWpf.Classes
 {
     public class GameController
     {
-        // Макс кол-во строк в канвасе
-        public int numberofCellInWidth = 40;
-        // Макс кол-во столбцов в канвасе
-        public int numberofCellInHeight = 40;
-        // Набор клеток на поле в виде массива
-        public Rectangle[,] fields;
+     
         // Таймер для отсчета времени между поколениями
         public DispatcherTimer dispatcherTimer;
         // Признак старта отсчета таймера
         public bool isStartedTimer = false;
-        // Поле необходимое для случайного заполнения поля
-        public Random random;
-        
+
         private void DispatcherTimer_Tick( object sender, EventArgs e )
         {
             LifeCreator.CreateNextGeneration();
@@ -40,8 +33,8 @@ namespace GameLifeWpf.Classes
             dispatcherTimer = new DispatcherTimer();
             dispatcherTimer.Interval = TimeSpan.FromMilliseconds(500);
             dispatcherTimer.Tick += DispatcherTimer_Tick;
-            fields = new Rectangle[numberofCellInWidth, numberofCellInHeight];
-            random = new Random();
+
+            
         }
 
         public static GameController getInstance()
