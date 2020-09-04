@@ -16,22 +16,21 @@ namespace GameLifeWpf
     {        
         private static GameController settings = GameController.getInstance();
         private LifeCreator _lifeCreator = new LifeCreator();
-        private DependencyProperty _dependencyFields;
 
         public MainWindow()
         {
             InitializeComponent();
             settings.dispatcherTimer.Tick += DispatcherTimer_Tick;
             chkBx_RandomState.DataContext = _lifeCreator.IsRandom;
-            _dependencyFields =  DependencyProperty.Register("Fields", typeof(bool[,]), typeof(LifeCreator)) ;
+            
         }
 
         private void EmptyCell_MouseDown(object sender, MouseButtonEventArgs e)
         {
             var cell = (Rectangle)sender;
-            var value = (bool)(cell.GetValue(_dependencyFields));
+            var value = (bool)(cell.Tag);
             var newValue = !value;
-            cell.SetValue(_dependencyFields, newValue);
+            cell.Tag = newValue;
             cell.Fill = newValue? Brushes.Red : Brushes.DarkOrange;
         }
 
@@ -60,14 +59,19 @@ namespace GameLifeWpf
                         Width = mainLifeGrid.ActualWidth / width - 2.0,
                         Height = mainLifeGrid.ActualWidth / height - 2.0
                     };
-                    emptyCell.DataContext = _lifeCreator.Fields[i, j];
+                    
+                    //emptyCell.DataContext = _lifeCreator.Fields[i, j];
+                    
+                    emptyCell.SetBinding(Rectangle.TagProperty, new System.Windows.Data.Binding("value") 
+                        { Source = _lifeCreator.Fields[i, j],
+                        Mode = System.Windows.Data.BindingMode.TwoWay,
+                        UpdateSourceTrigger = System.Windows.Data.UpdateSourceTrigger.PropertyChanged});
                     mainLifeGrid.Children.Add(emptyCell);
                     Canvas.SetLeft(emptyCell, j * mainLifeGrid.ActualWidth / width);
                     Canvas.SetTop(emptyCell, i * mainLifeGrid.ActualWidth / height);
                     // Делаем каждую ячейку кликабельной, подписывая на событие 
                     emptyCell.MouseDown += EmptyCell_MouseDown;
-                    emptyCell.Fill
-
+                    emptyCell.Fill = (bool)emptyCell.Tag ? Brushes.Red : Brushes.DarkOrange;
                 }
             }    
         }

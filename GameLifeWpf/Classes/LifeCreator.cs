@@ -6,6 +6,14 @@ using System.Windows.Shapes;
 
 namespace GameLifeWpf.Classes
 {
+    class val
+    {
+        public bool value { get; set; }
+        public val(bool val = false)
+        {
+            value = val;
+        }
+    }
     class LifeCreator
     {
         //private static GameController gameSettings = GameController.getInstance();
@@ -14,7 +22,7 @@ namespace GameLifeWpf.Classes
         // Макс кол-во столбцов в канвасе
         private int _numberofCellInHeight = 40;
 
-        public bool[,] Fields { get; private set; }
+        public val[,] Fields { get; private set; }
 
         private bool _isRandom;
         public bool IsRandom { get { return _isRandom; }
@@ -27,22 +35,22 @@ namespace GameLifeWpf.Classes
                         if (_isRandom)
                         {
                             var random = new Random();
-                            Fields[i, j] = (random.Next(0, 1) == 1) ? true : false;
+                            Fields[i, j].value = (random.Next(0, 1) == 1) ? true : false;
                         }
-                        else Fields[i, j] = false;
+                        else Fields[i, j].value = false;
                     }
                 }
             } }
 
         public LifeCreator()
         {
-            Fields = new bool[_numberofCellInWidth, _numberofCellInHeight];
+            Fields = new val[_numberofCellInWidth, _numberofCellInHeight];
             // Заполняем игровое поле 
             for (int i = 0; i < _numberofCellInHeight; i++)
             {
                 for (int j = 0; j < _numberofCellInWidth; j++)
                 {
-                    Fields[i, j] = false;
+                    Fields[i, j] = new val();
                 }
             }
         }
@@ -69,10 +77,10 @@ namespace GameLifeWpf.Classes
                     if (leftOnX < 0) { leftOnX = _numberofCellInWidth - 1; }
                     if (righOnX >= _numberofCellInWidth) { righOnX = 0; }
 
-                    if (Fields[heigOnY, leftOnX] || Fields[heigOnY, j] 
-                        || Fields[heigOnY, righOnX] || Fields[i, leftOnX] 
-                        || Fields[i, righOnX] || Fields[bottomOnY, leftOnX]
-                        || Fields[bottomOnY, j] || Fields[bottomOnY, righOnX]) 
+                    if (Fields[heigOnY, leftOnX].value || Fields[heigOnY, j].value
+                        || Fields[heigOnY, righOnX].value || Fields[i, leftOnX].value
+                        || Fields[i, righOnX].value || Fields[bottomOnY, leftOnX].value
+                        || Fields[bottomOnY, j].value || Fields[bottomOnY, righOnX].value) 
                         neighboor++; 
 
                     numberOfNeighbors[i, j] = neighboor;
@@ -85,10 +93,10 @@ namespace GameLifeWpf.Classes
                 {
                     if (numberOfNeighbors[i, j] < 2 || numberOfNeighbors[i, j] > 3)
                     {
-                        Fields[i, j] = false;
+                        Fields[i, j].value = false;
                     }
                     else if (numberOfNeighbors[i, j] == 3)
-                        Fields[i, j] = true;
+                        Fields[i, j].value = true;
                 }
             }
         }
