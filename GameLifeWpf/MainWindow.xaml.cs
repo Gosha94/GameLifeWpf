@@ -46,8 +46,8 @@ namespace GameLifeWpf
             settings.dispatcherTimer.Stop();
             SetAutoGenerationButtonState();
             var isRandomLife = CheckRandomState();
-            var width = _lifeCreator.Fields.GetLength(1);
-            var height = _lifeCreator.Fields.GetLength(0);
+            var width = _lifeCreator.Cells.GetLength(1);
+            var height = _lifeCreator.Cells.GetLength(0);
 
             for (int i = 0; i < height; i++)
             {
@@ -63,7 +63,7 @@ namespace GameLifeWpf
                     //emptyCell.DataContext = _lifeCreator.Fields[i, j];
                     
                     emptyCell.SetBinding(Rectangle.TagProperty, new System.Windows.Data.Binding("value") 
-                        { Source = _lifeCreator.Fields[i, j],
+                        { Source = _lifeCreator.Cells[i, j],
                         Mode = System.Windows.Data.BindingMode.TwoWay,
                         UpdateSourceTrigger = System.Windows.Data.UpdateSourceTrigger.PropertyChanged});
                     mainLifeGrid.Children.Add(emptyCell);
