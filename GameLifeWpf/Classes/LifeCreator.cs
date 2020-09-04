@@ -24,18 +24,18 @@ namespace GameLifeWpf.Classes
 
         public CellValueDto[,] Cells { get; private set; }
 
-        private bool _isRandom;
-        public bool IsRandom { get { return _isRandom; }
+        private bool _isRandom ;
+        public bool? IsRandom { get { return _isRandom; }
             set {
-                _isRandom = value;
+                _isRandom = value??false;
+                var random = new Random();
                 for (int i = 0; i < _numberofCellInHeight; i++)
                 {
                     for (int j = 0; j < _numberofCellInWidth; j++)
                     {
                         if (_isRandom)
                         {
-                            var random = new Random();
-                            Cells[i, j].Value = (random.Next(0, 1) == 1) ? true : false;
+                            Cells[i, j].Value = (random.Next(0, 2) == 1) ? true : false;
                         }
                         else Cells[i, j].Value = false;
                     }

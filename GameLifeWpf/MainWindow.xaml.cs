@@ -21,8 +21,7 @@ namespace GameLifeWpf
         {
             InitializeComponent();
             settings.dispatcherTimer.Tick += DispatcherTimer_Tick;
-            chkBx_RandomState.DataContext = _lifeCreator.IsRandom;
-            
+     
         }
 
         private void EmptyCell_MouseDown(object sender, MouseButtonEventArgs e)
@@ -62,7 +61,7 @@ namespace GameLifeWpf
                     
                     //emptyCell.DataContext = _lifeCreator.Fields[i, j];
                     
-                    emptyCell.SetBinding(Rectangle.TagProperty, new System.Windows.Data.Binding("value") 
+                    emptyCell.SetBinding(Rectangle.TagProperty, new System.Windows.Data.Binding(nameof(CellValueDto.Value)) 
                         { Source = _lifeCreator.Cells[i, j],
                         Mode = System.Windows.Data.BindingMode.TwoWay,
                         UpdateSourceTrigger = System.Windows.Data.UpdateSourceTrigger.PropertyChanged});
@@ -113,6 +112,20 @@ namespace GameLifeWpf
             SetAutoGenerationButtonState();
         }
 
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
 
+            chkBx_RandomState.SetBinding(CheckBox.IsCheckedProperty,
+                new System.Windows.Data.Binding(nameof(LifeCreator.IsRandom))
+                {
+                    Source = _lifeCreator,
+                    Mode = System.Windows.Data.BindingMode.TwoWay,
+                    UpdateSourceTrigger = System.Windows.Data.UpdateSourceTrigger.PropertyChanged
+
+                });
+
+            
+
+        }
     }
 }

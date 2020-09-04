@@ -5,14 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GameLifeWpf"        
         mc:Ignorable="d"
-        Title="Игра Жизнь" Height="600" Width="800" Icon="Icons/Virus.ico" Background="#FF080000" ResizeMode="NoResize">
+        Title="Игра Жизнь" Height="600" Width="800" Icon="Icons/Virus.ico" Background="#FF080000" ResizeMode="NoResize" Loaded="Window_Loaded">
 
     <Grid Margin="0,0,0,0">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="85*"/>
-            <ColumnDefinition Width="311*"/>
+            <ColumnDefinition Width="170*"/>
+            <ColumnDefinition Width="245*"/>
+            <ColumnDefinition Width="379*"/>
         </Grid.ColumnDefinitions>
-        <Canvas x:Name="mainLifeGrid" HorizontalAlignment="Stretch" Height="500" Width="500" Margin="0,0,0,0" VerticalAlignment="Stretch" Grid.Column="1" Background="Black"  />
+        <Canvas x:Name="mainLifeGrid" HorizontalAlignment="Stretch" Height="500" Width="500" Margin="62,36" VerticalAlignment="Stretch" Grid.Column="1" Background="Black" Grid.ColumnSpan="2"  />
         <Button Content="Новая игра" Click="btn_Start_Click" HorizontalAlignment="Left" Margin="10,21,0,0" VerticalAlignment="Top" Width="148" Height="29" Grid.Column="0"/>
         <Button x:Name="btn_StartStop" Content="Запуск генерации" HorizontalAlignment="Left" Margin="10,64,0,0" VerticalAlignment="Top" Width="148" Height="30" Click="btnStartStop_Click" IsEnabled="False" Grid.Column="0"/>
         <Button Content="Выход" HorizontalAlignment="Left" Margin="10,146,0,0" VerticalAlignment="Top" Width="148" Click="btn_Exit_Click" Height="29" Grid.Column="0"/>
