@@ -44,7 +44,7 @@ namespace GameLifeWpf
             settings.isStartedTimer = false;
             settings.dispatcherTimer.Stop();
             SetAutoGenerationButtonState();
-            Update();
+            UpdateView();
 
 
         }
@@ -52,13 +52,13 @@ namespace GameLifeWpf
         public void DispatcherTimer_Tick(object sender, EventArgs e)
         {
             _lifeCreator.CreateNextGeneration();
-            Update();
+            UpdateView();
        
         }
 
-        private void Update()
+        private void UpdateView()
         {
-            var isRandomLife = CheckRandomState();
+          
             var width = _lifeCreator.Cells.GetLength(1);
             var height = _lifeCreator.Cells.GetLength(0);
             mainLifeGrid.Children.Clear();
@@ -101,12 +101,6 @@ namespace GameLifeWpf
             if (settings.isStartedTimer == true) btn_StartStop.Content = "Остановка генерации";
         }
 
-        private bool CheckRandomState()
-        {
-            if (chkBx_RandomState.IsChecked == true) return true;
-            else return false;
-        }        
-
         private void btnStartStop_Click(object sender, RoutedEventArgs e)
         {
             if (settings.isStartedTimer)
@@ -125,7 +119,7 @@ namespace GameLifeWpf
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-
+            
             chkBx_RandomState.SetBinding(CheckBox.IsCheckedProperty,
                 new System.Windows.Data.Binding(nameof(LifeCreator.IsRandom))
                 {
