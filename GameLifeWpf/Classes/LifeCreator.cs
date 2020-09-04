@@ -35,7 +35,7 @@ namespace GameLifeWpf.Classes
                     {
                         if (_isRandom)
                         {
-                            Cells[i, j].Value = (random.Next(0, 2) == 1) ? true : false;
+                            Cells[i, j].Value = (random.Next(0, 3) == 1) ? true : false;
                         }
                         else Cells[i, j].Value = false;
                     }
@@ -77,11 +77,15 @@ namespace GameLifeWpf.Classes
                     if (leftOnX < 0) { leftOnX = _numberofCellInWidth - 1; }
                     if (righOnX >= _numberofCellInWidth) { righOnX = 0; }
 
-                    if (Cells[heigOnY, leftOnX].Value || Cells[heigOnY, j].Value
-                        || Cells[heigOnY, righOnX].Value || Cells[i, leftOnX].Value
-                        || Cells[i, righOnX].Value || Cells[bottomOnY, leftOnX].Value
-                        || Cells[bottomOnY, j].Value || Cells[bottomOnY, righOnX].Value) 
-                        neighboor++; 
+                    neighboor = (Cells[heigOnY, leftOnX].Value ? 1 : 0)
+                        + (Cells[heigOnY, j].Value ? 1 : 0        )
+                        + (Cells[heigOnY, righOnX].Value ? 1 : 0  )
+                        + (Cells[i, leftOnX].Value ? 1 : 0        )
+                        + (Cells[i, righOnX].Value ? 1 : 0        )
+                        + (Cells[bottomOnY, leftOnX].Value ? 1 : 0)
+                        + (Cells[bottomOnY, j].Value ? 1 : 0      )
+                        + (Cells[bottomOnY, righOnX].Value ? 1 : 0); 
+
 
                     numberOfNeighbors[i, j] = neighboor;
                 }
@@ -97,6 +101,7 @@ namespace GameLifeWpf.Classes
                     }
                     else if (numberOfNeighbors[i, j] == 3)
                         Cells[i, j].Value = true;
+
                 }
             }
         }

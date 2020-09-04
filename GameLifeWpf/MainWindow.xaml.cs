@@ -44,10 +44,24 @@ namespace GameLifeWpf
             settings.isStartedTimer = false;
             settings.dispatcherTimer.Stop();
             SetAutoGenerationButtonState();
+            Update();
+
+
+        }
+
+        public void DispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            _lifeCreator.CreateNextGeneration();
+            Update();
+       
+        }
+
+        private void Update()
+        {
             var isRandomLife = CheckRandomState();
             var width = _lifeCreator.Cells.GetLength(1);
             var height = _lifeCreator.Cells.GetLength(0);
-
+            mainLifeGrid.Children.Clear();
             for (int i = 0; i < height; i++)
             {
                 for (int j = 0; j < width; j++)
@@ -58,13 +72,15 @@ namespace GameLifeWpf
                         Width = mainLifeGrid.ActualWidth / width - 2.0,
                         Height = mainLifeGrid.ActualWidth / height - 2.0
                     };
-                    
+
                     //emptyCell.DataContext = _lifeCreator.Fields[i, j];
-                    
-                    emptyCell.SetBinding(Rectangle.TagProperty, new System.Windows.Data.Binding(nameof(CellValueDto.Value)) 
-                        { Source = _lifeCreator.Cells[i, j],
+
+                    emptyCell.SetBinding(Rectangle.TagProperty, new System.Windows.Data.Binding(nameof(CellValueDto.Value))
+                    {
+                        Source = _lifeCreator.Cells[i, j],
                         Mode = System.Windows.Data.BindingMode.TwoWay,
-                        UpdateSourceTrigger = System.Windows.Data.UpdateSourceTrigger.PropertyChanged});
+                        UpdateSourceTrigger = System.Windows.Data.UpdateSourceTrigger.PropertyChanged
+                    });
                     mainLifeGrid.Children.Add(emptyCell);
                     Canvas.SetLeft(emptyCell, j * mainLifeGrid.ActualWidth / width);
                     Canvas.SetTop(emptyCell, i * mainLifeGrid.ActualWidth / height);
@@ -72,12 +88,7 @@ namespace GameLifeWpf
                     emptyCell.MouseDown += EmptyCell_MouseDown;
                     emptyCell.Fill = (bool)emptyCell.Tag ? Brushes.Red : Brushes.DarkOrange;
                 }
-            }    
-        }
-
-        public void DispatcherTimer_Tick(object sender, EventArgs e)
-        {
-            _lifeCreator.CreateNextGeneration();
+            }
         }
 
         /// <summary>
@@ -123,8 +134,8 @@ namespace GameLifeWpf
                     UpdateSourceTrigger = System.Windows.Data.UpdateSourceTrigger.PropertyChanged
 
                 });
+           
 
-            
 
         }
     }
