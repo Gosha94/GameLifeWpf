@@ -15,20 +15,23 @@ namespace GameLifeWpf
     public partial class MainWindow : Window
     {        
         private static GameController settings = GameController.getInstance();
-        private LifeCreator lifeCreator = new LifeCreator();
+        private LifeCreator _lifeCreator = new LifeCreator();
+        private DependencyProperty _dependencyFields;
 
         public MainWindow()
         {
             InitializeComponent();
-            chkBx_RandomState.DataContext = lifeCreator.IsRandom;
+            settings.dispatcherTimer.Tick += DispatcherTimer_Tick;
+            chkBx_RandomState.DataContext = _lifeCreator.IsRandom;
+            _dependencyFields =  DependencyProperty.Register("Fields", typeof(bool[,]), typeof(LifeCreator)) ;
         }
 
         private void EmptyCell_MouseDown(object sender, MouseButtonEventArgs e)
         {
             var cell = (Rectangle)sender;
-            var value = (bool)cell.GetValue();
+            var value = (bool)(cell.GetValue(_dependencyFields));
             var newValue = !value;
-            cell.SetValue(, newvalue);
+            cell.SetValue(_dependencyFields, newValue);
             cell.Fill = newValue? Brushes.Red : Brushes.DarkOrange;
         }
 
@@ -44,8 +47,8 @@ namespace GameLifeWpf
             settings.dispatcherTimer.Stop();
             SetAutoGenerationButtonState();
             var isRandomLife = CheckRandomState();
-            var width = lifeCreator.Fields.GetLength(1);
-            var height = lifeCreator.Fields.GetLength(0);
+            var width = _lifeCreator.Fields.GetLength(1);
+            var height = _lifeCreator.Fields.GetLength(0);
 
             for (int i = 0; i < height; i++)
             {
@@ -57,22 +60,21 @@ namespace GameLifeWpf
                         Width = mainLifeGrid.ActualWidth / width - 2.0,
                         Height = mainLifeGrid.ActualWidth / height - 2.0
                     };
-                    emptyCell.DataContext = lifeCreator.Fields[i, j];
+                    emptyCell.DataContext = _lifeCreator.Fields[i, j];
                     mainLifeGrid.Children.Add(emptyCell);
                     Canvas.SetLeft(emptyCell, j * mainLifeGrid.ActualWidth / width);
                     Canvas.SetTop(emptyCell, i * mainLifeGrid.ActualWidth / height);
                     // Делаем каждую ячейку кликабельной, подписывая на событие 
                     emptyCell.MouseDown += EmptyCell_MouseDown;
+                    emptyCell.Fill
 
                 }
-            }
-
-            LifeCreator.CreateFirstLife(  CheckRandomState(),  mainLifeGrid);            
+            }    
         }
 
         public void DispatcherTimer_Tick(object sender, EventArgs e)
         {
-            CreateNextGeneration();
+            _lifeCreator.CreateNextGeneration();
         }
 
         /// <summary>
@@ -105,6 +107,8 @@ namespace GameLifeWpf
             }
             
             SetAutoGenerationButtonState();
-        }               
+        }
+
+
     }
 }

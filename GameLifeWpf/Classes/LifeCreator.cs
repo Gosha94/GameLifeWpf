@@ -17,7 +17,7 @@ namespace GameLifeWpf.Classes
         public bool[,] Fields { get; private set; }
 
         private bool _isRandom;
-        public bool IsRandom { get { return _isRandom}
+        public bool IsRandom { get { return _isRandom; }
             set {
                 _isRandom = value;
                 for (int i = 0; i < _numberofCellInHeight; i++)

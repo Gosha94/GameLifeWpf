@@ -17,10 +17,6 @@ namespace GameLifeWpf.Classes
         // Признак старта отсчета таймера
         public bool isStartedTimer = false;
 
-        private void DispatcherTimer_Tick( object sender, EventArgs e )
-        {
-            LifeCreator.CreateNextGeneration();
-        }
 
 
         // Реализуем паттерн Singletone для получения доступа к Контроллеру игры
@@ -32,9 +28,8 @@ namespace GameLifeWpf.Classes
         {
             dispatcherTimer = new DispatcherTimer();
             dispatcherTimer.Interval = TimeSpan.FromMilliseconds(500);
-            dispatcherTimer.Tick += DispatcherTimer_Tick;
+          //  dispatcherTimer.Tick += DispatcherTimer_Tick;
 
-            
         }
 
         public static GameController getInstance()
