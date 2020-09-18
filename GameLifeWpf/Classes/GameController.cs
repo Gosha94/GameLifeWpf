@@ -4,14 +4,11 @@ using System.Windows.Threading;
 namespace GameLifeWpf.Classes
 {
     public class GameController
-    {
-     
+    {     
         // Таймер для отсчета времени между поколениями
         public DispatcherTimer dispatcherTimer;
         // Признак старта отсчета таймера
         public bool isStartedTimer = false;
-
-
 
         // Реализуем паттерн Singletone для получения доступа к Контроллеру игры
         private static GameController instance;
@@ -21,9 +18,7 @@ namespace GameLifeWpf.Classes
         private GameController()
         {
             dispatcherTimer = new DispatcherTimer();
-            dispatcherTimer.Interval = TimeSpan.FromMilliseconds(500);
-          //  dispatcherTimer.Tick += DispatcherTimer_Tick;
-
+            dispatcherTimer.Interval = TimeSpan.FromMilliseconds(500);            
         }
 
         public static GameController getInstance()
