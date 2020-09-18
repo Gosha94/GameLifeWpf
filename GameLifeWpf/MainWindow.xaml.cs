@@ -20,8 +20,7 @@ namespace GameLifeWpf
         public MainWindow()
         {
             InitializeComponent();
-            settings.dispatcherTimer.Tick += DispatcherTimer_Tick;
-     
+            settings.dispatcherTimer.Tick += DispatcherTimer_Tick;     
         }
 
         private void EmptyCell_MouseDown(object sender, MouseButtonEventArgs e)
