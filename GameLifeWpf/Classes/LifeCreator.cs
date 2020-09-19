@@ -1,22 +1,40 @@
 ﻿using System;
-using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Shapes;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace GameLifeWpf.Classes
 {
-    class CellValueDto
+    class CellValueDto : INotifyPropertyChanged
     {
-        public bool Value { get; set; }
+        private bool _value;
+
+        public bool Value
+        {
+            get { return _value; }
+            set { 
+                _value = value;
+                NotifyPropertyChanged();
+            }
+        }
+
         public CellValueDto(bool value = false)
         {
             Value = value;
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        // This method is called by the Set accessor of each property.  
+        // The CallerMemberName attribute that is applied to the optional propertyName  
+        // parameter causes the property name of the caller to be substituted as an argument.  
+        private void NotifyPropertyChanged([CallerMemberName] String propertyName = nameof(CellValueDto.Value))
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
-    class LifeCreator
+    class LifeCreator 
     {
-        //private static GameController gameSettings = GameController.getInstance();
+
         // Макс кол-во строк в канвасе
         private int _numberofCellInWidth = 40;
         // Макс кол-во столбцов в канвасе
@@ -104,6 +122,7 @@ namespace GameLifeWpf.Classes
 
                 }
             }
+          
         }
     }
 }

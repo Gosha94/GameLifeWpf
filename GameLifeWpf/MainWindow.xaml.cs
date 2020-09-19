@@ -31,7 +31,6 @@ namespace GameLifeWpf
             cell.Fill = newValue? Brushes.Red : Brushes.DarkOrange;
         }
 
-
         private void btn_Exit_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
@@ -42,23 +41,37 @@ namespace GameLifeWpf
             settings.isStartedTimer = false;
             settings.dispatcherTimer.Stop();
             SetAutoGenerationButtonState();
-            UpdateView();
-
-
+            CreateView();
         }
 
         public void DispatcherTimer_Tick(object sender, EventArgs e)
         {
+
             _lifeCreator.CreateNextGeneration();
             UpdateView();
-       
+            
         }
 
         private void UpdateView()
         {
-          
+            /*
+             При каждом обновлении по таймеру необходимо
+            Очищать игровое поле
+            Записывать в каждую ячейку поля новые значения (выгружать данные через Dto)
+             */
+            foreach (Rectangle cell in mainLifeGrid.Children)
+            {
+                cell.GetBindingExpression(Rectangle.TagProperty).UpdateTarget();
+                cell.Fill = (bool)cell.Tag ? Brushes.Red : Brushes.DarkOrange;
+            }
+        }
+
+        private void CreateView()
+        {
+            // Получаем размерность поля игры
             var width = _lifeCreator.Cells.GetLength(1);
             var height = _lifeCreator.Cells.GetLength(0);
+            // Очищаем все элементы из игрового поля
             mainLifeGrid.Children.Clear();
             for (int i = 0; i < height; i++)
             {
@@ -73,12 +86,14 @@ namespace GameLifeWpf
 
                     //emptyCell.DataContext = _lifeCreator.Fields[i, j];
 
+                    // Выполняем привязку для двухстороннего обмена с формой
                     emptyCell.SetBinding(Rectangle.TagProperty, new System.Windows.Data.Binding(nameof(CellValueDto.Value))
                     {
                         Source = _lifeCreator.Cells[i, j],
                         Mode = System.Windows.Data.BindingMode.TwoWay,
                         UpdateSourceTrigger = System.Windows.Data.UpdateSourceTrigger.PropertyChanged
                     });
+
                     mainLifeGrid.Children.Add(emptyCell);
                     Canvas.SetLeft(emptyCell, j * mainLifeGrid.ActualWidth / width);
                     Canvas.SetTop(emptyCell, i * mainLifeGrid.ActualWidth / height);
@@ -90,7 +105,7 @@ namespace GameLifeWpf
         }
 
         /// <summary>
-        /// Метод 
+        /// Метод изменения названия кнопки Запуска/Остановки генерации поколений
         /// </summary>
         private void SetAutoGenerationButtonState()
         {
@@ -126,9 +141,6 @@ namespace GameLifeWpf
                     UpdateSourceTrigger = System.Windows.Data.UpdateSourceTrigger.PropertyChanged
 
                 });
-           
-
-
         }
     }
 }
