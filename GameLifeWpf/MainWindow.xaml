@@ -13,9 +13,10 @@
             <ColumnDefinition Width="379*"/>
         </Grid.ColumnDefinitions>
         <Canvas x:Name="mainLifeGrid" HorizontalAlignment="Stretch" Height="500" Width="500" Margin="62,36" VerticalAlignment="Stretch" Grid.Column="1" Background="Black" Grid.ColumnSpan="2"  />
-        <Button Content="Новая игра" Click="btn_Start_Click" HorizontalAlignment="Left" Margin="10,21,0,0" VerticalAlignment="Top" Width="148" Height="29" Grid.Column="0"/>
-        <Button x:Name="btn_StartStop" Content="Запуск генерации" HorizontalAlignment="Left" Margin="10,64,0,0" VerticalAlignment="Top" Width="148" Height="30" Click="btnStartStop_Click" IsEnabled="False" Grid.Column="0"/>
-        <Button Content="Выход" HorizontalAlignment="Left" Margin="10,146,0,0" VerticalAlignment="Top" Width="148" Click="btn_Exit_Click" Height="29" Grid.Column="0"/>
-        <CheckBox x:Name="chkBx_RandomState" Content="Случайная расстановка" HorizontalAlignment="Left" Margin="10,109,0,0" VerticalAlignment="Top" Foreground="White" Width="148" Grid.Column="0"/>
+        <Button Content="Новая игра" Click="btn_Start_Click" HorizontalAlignment="Left" Margin="10,21,0,0" VerticalAlignment="Top" Width="148" Height="40" Grid.Column="0"/>
+        <Button x:Name="btn_StartStop" Content="Запуск генерации" HorizontalAlignment="Left" Margin="10,86,0,0" VerticalAlignment="Top" Width="148" Height="40" Click="btnStartStop_Click" IsEnabled="False" Grid.Column="0"/>
+        <Button Content="Выход" HorizontalAlignment="Left" Margin="10,464,0,0" VerticalAlignment="Top" Width="148" Click="btn_Exit_Click" Height="40" Grid.Column="0"/>
+        <CheckBox x:Name="chkBx_RandomState" Content="Случайная расстановка" HorizontalAlignment="Left" Margin="10,150,0,0" VerticalAlignment="Top" Foreground="White" Width="148" Grid.Column="0"/>
+        <Button x:Name="btn_SaveGame" Content="Сохранить игру" HorizontalAlignment="Left" Margin="10,190,0,0" VerticalAlignment="Top" Width="148" Height="40" Click="btn_SaveGame_Click" Visibility="Hidden"/>
     </Grid>
 </Window>
