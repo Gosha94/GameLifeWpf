@@ -18,5 +18,7 @@
         <Button Content="Выход" HorizontalAlignment="Left" Margin="10,464,0,0" VerticalAlignment="Top" Width="148" Click="btn_Exit_Click" Height="40" Grid.Column="0"/>
         <CheckBox x:Name="chkBx_RandomState" Content="Случайная расстановка" HorizontalAlignment="Left" Margin="10,150,0,0" VerticalAlignment="Top" Foreground="White" Width="148" Grid.Column="0"/>
         <Button x:Name="btn_SaveGame" Content="Сохранить игру" HorizontalAlignment="Left" Margin="10,190,0,0" VerticalAlignment="Top" Width="148" Height="40" Click="btn_SaveGame_Click" Visibility="Hidden"/>
+        <Label Content="Поколение: 0" HorizontalAlignment="Left" Margin="10,414,0,0" VerticalAlignment="Top" Foreground="White" Width="75"/>
+        <Label x:Name="lbl_GenerationNumber" Content="0" HorizontalAlignment="Left" Margin="106,414,0,0" VerticalAlignment="Top" Foreground="White" Width="52"/>
     </Grid>
 </Window>

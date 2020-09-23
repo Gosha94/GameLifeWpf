@@ -34,7 +34,6 @@ namespace GameLifeWpf.Classes
     }
     class LifeCreator 
     {
-
         // Макс кол-во строк в канвасе
         private int _numberofCellInWidth = 40;
         // Макс кол-во столбцов в канвасе
@@ -60,6 +59,13 @@ namespace GameLifeWpf.Classes
                 }
             } }
 
+        private int generationNumber;
+
+        public int GenerationNumber
+        {
+            get { return generationNumber; }            
+        }
+
         public LifeCreator()
         {
             Cells = new CellValueDto[_numberofCellInWidth, _numberofCellInHeight];
@@ -73,9 +79,8 @@ namespace GameLifeWpf.Classes
             }
         }
 
-
         public void CreateNextGeneration()
-        {
+        {          
             int[,] numberOfNeighbors = new int[_numberofCellInHeight, _numberofCellInWidth];
 
             for (int i = 0; i < _numberofCellInHeight; i++)
@@ -122,7 +127,8 @@ namespace GameLifeWpf.Classes
 
                 }
             }
-          
+
+            this.generationNumber++;
         }
     }
 }
