@@ -161,7 +161,7 @@ namespace GameLifeWpf
 
         private void btn_SaveGame_Click(object sender, RoutedEventArgs e)
         {
-            
+            DatabaseHelper.SaveGame(_lifeCreator);
         }
     }
 }

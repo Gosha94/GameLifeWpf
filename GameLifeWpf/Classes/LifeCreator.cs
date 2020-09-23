@@ -41,8 +41,10 @@ namespace GameLifeWpf.Classes
 
         public CellValueDto[,] Cells { get; private set; }
 
-        private bool _isRandom ;
-        public bool? IsRandom { get { return _isRandom; }
+        private bool _isRandom;
+        public bool? IsRandom 
+        { 
+            get { return _isRandom; }
             set {
                 _isRandom = value??false;
                 var random = new Random();
@@ -57,13 +59,19 @@ namespace GameLifeWpf.Classes
                         else Cells[i, j].Value = false;
                     }
                 }
-            } }
+            }
+        }
 
         private int generationNumber;
-
         public int GenerationNumber
         {
             get { return generationNumber; }            
+        }
+
+        private DateTime birthGenerationDate;
+        public DateTime BirthGenerationDate
+        {
+            get { return birthGenerationDate; }            
         }
 
         public LifeCreator()
@@ -78,7 +86,6 @@ namespace GameLifeWpf.Classes
                 }
             }
         }
-
         public void CreateNextGeneration()
         {          
             int[,] numberOfNeighbors = new int[_numberofCellInHeight, _numberofCellInWidth];
@@ -128,6 +135,7 @@ namespace GameLifeWpf.Classes
                 }
             }
 
+            this.birthGenerationDate = DateTime.Now;
             this.generationNumber++;
         }
     }
